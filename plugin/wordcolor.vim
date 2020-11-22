@@ -6,7 +6,7 @@ let g:loaded_wordcolor = 1
 
 if has('gui_running')
     let s:word_color_hi_default = #{
-                \ bg: ['Black', 'Maroon', 'Green', 'Olive', 'Navy', 'Purple', 'Teal', 'Silver', 'Grey', 'Red', 'Lime', 'Yellow', 'Blue', 'Fuchsia' 'Aqua', 'White'],
+                \ bg: ['Black', 'Maroon', 'Green', 'Olive', 'Navy', 'Purple', 'Teal', 'Silver', 'Grey', 'Red', 'Lime', 'Yellow', 'Blue', 'Fuchsia', 'Aqua', 'White'],
                 \ fg: ['White', 'White', 'Black', 'Black', 'Black', 'Black', 'Black', 'Black', 'White', 'White', 'Black', 'Black', 'Black', 'Black', 'Black', 'Black'],
                 \ }
 else
