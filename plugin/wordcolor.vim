@@ -56,11 +56,17 @@ function! s:set_word_color(...) abort
     elseif a:1 == 'keyword'
         execute "syntax keyword WordColor" . g:word_color_cnt[0] . " containedin=ALL " . wd
     else
-        echoerr 'invalid setting.'
+        echoerr 'invalid setting of syntax type : ' . a:1
+    endif
+
+    if has('gui_running')
+        let tname = 'gui'
+    else
+        let tname = 'cterm'
     endif
     execute "highlight WordColor" . g:word_color_cnt[0] .
-                \ " ctermfg=".(g:word_color_highlight['fg'][g:word_color_cnt[0]]).
-                \ " ctermbg=" . (g:word_color_highlight['bg'][g:word_color_cnt[0]])
+                \ " ".tname."fg=" . (g:word_color_highlight['fg'][g:word_color_cnt[0]]) .
+                \ " ".tname."bg=" . (g:word_color_highlight['bg'][g:word_color_cnt[0]])
 endfunction
 
 command! -nargs=? WordColorKeyWord call s:set_word_color('keyword', <f-args>)
