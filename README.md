@@ -5,14 +5,19 @@ vim function to highlight any words.
 ## Usage
 
 ```vim
-:WordColor
+:WordColor 'word'
 ```
 
 If you want to specify the syntax type,
 ```vim
-:WordColorMatch
+:WordColorMatch 'word'
 " or
-:WordColorKeyWord
+:WordColorKeyWord 'word'
+```
+
+To clear colors, you call the command with no argument.
+```vim
+:WordColor
 ```
 
 ## Variables

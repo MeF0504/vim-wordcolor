@@ -25,7 +25,7 @@ function! s:set_word_color(...) abort
         for i in range(0, g:word_color_cnt[1])
             execute "syntax clear WordColor" . i
         endfor
-        let g:word_color_cnt = [-1, -1]
+        let g:word_color_cnt[0] = -1
         return
     endif
 
@@ -37,10 +37,10 @@ function! s:set_word_color(...) abort
     endif
 
     let g:word_color_cnt[0] += 1
-    if g:word_color_cnt[0] > color_num
+    if g:word_color_cnt[0] >= color_num
         let g:word_color_cnt[0] = 0
     endif
-    if g:word_color_cnt[1] < color_num
+    if g:word_color_cnt[1] < g:word_color_cnt[0]
         let g:word_color_cnt[1] = g:word_color_cnt[0]
     endif
 
@@ -58,7 +58,9 @@ function! s:set_word_color(...) abort
     else
         echoerr 'invalid setting.'
     endif
-    execute "highlight WordColor" . g:word_color_cnt[0] . " ctermfg=0 ctermbg=" . (g:word_color_cnt[0]+9)
+    execute "highlight WordColor" . g:word_color_cnt[0] .
+                \ " ctermfg=".(g:word_color_highlight['fg'][g:word_color_cnt[0]]).
+                \ " ctermbg=" . (g:word_color_highlight['bg'][g:word_color_cnt[0]])
 endfunction
 
 command! -nargs=? WordColorKeyWord call s:set_word_color('keyword', <f-args>)
