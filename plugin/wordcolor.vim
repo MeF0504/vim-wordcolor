@@ -5,14 +5,14 @@ endif
 let g:loaded_wordcolor = 1
 
 if has('gui_running')
-    let s:word_color_hi_default = #{
-                \ bg: ['Black', 'Maroon', 'Green', 'Olive', 'Navy', 'Purple', 'Teal', 'Silver', 'Grey', 'Red', 'Lime', 'Yellow', 'Blue', 'Fuchsia', 'Aqua', 'White'],
-                \ fg: ['White', 'White', 'Black', 'Black', 'Black', 'Black', 'Black', 'Black', 'White', 'White', 'Black', 'Black', 'Black', 'Black', 'Black', 'Black'],
+    let s:word_color_hi_default = {
+                \ 'bg': ['Black', 'Maroon', 'Green', 'Olive', 'Navy', 'Purple', 'Teal', 'Silver', 'Grey', 'Red', 'Lime', 'Yellow', 'Blue', 'Fuchsia', 'Aqua', 'White'],
+                \ 'fg': ['White', 'White', 'Black', 'Black', 'Black', 'Black', 'Black', 'Black', 'White', 'White', 'Black', 'Black', 'Black', 'Black', 'Black', 'Black'],
                 \ }
 else
-    let s:word_color_hi_default = #{
-                \ bg: [  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,  14,  15],
-                \ fg: [255, 255, 233, 233, 233, 233, 233, 233, 255, 255, 233, 233, 233, 233, 233, 233],
+    let s:word_color_hi_default = {
+                \ 'bg': [  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12,  13,  14,  15],
+                \ 'fg': [255, 255, 233, 233, 233, 233, 233, 233, 255, 255, 233, 233, 233, 233, 233, 233],
                 \ }
 endif
 let g:word_color_highlight = get(g:, 'word_color_highlight', s:word_color_hi_default)
