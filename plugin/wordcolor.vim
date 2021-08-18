@@ -18,14 +18,14 @@ endif
 let g:word_color_highlight = get(g:, 'word_color_highlight', s:word_color_hi_default)
 let g:word_color_default = get(g:, 'word_color_default', 'match')
 
-let g:word_color_cnt = [-1,-1]
+let s:word_color_cnt = [-1,-1]
 
 function! s:set_word_color(...) abort
     if a:0 == 1
-        for i in range(0, g:word_color_cnt[1])
+        for i in range(0, s:word_color_cnt[1])
             execute "syntax clear WordColor" . i
         endfor
-        let g:word_color_cnt[0] = -1
+        let s:word_color_cnt[0] = -1
         return
     endif
 
@@ -36,12 +36,12 @@ function! s:set_word_color(...) abort
         let g:word_color_highlight = s:word_color_hi_default
     endif
 
-    let g:word_color_cnt[0] += 1
-    if g:word_color_cnt[0] >= color_num
-        let g:word_color_cnt[0] = 0
+    let s:word_color_cnt[0] += 1
+    if s:word_color_cnt[0] >= color_num
+        let s:word_color_cnt[0] = 0
     endif
-    if g:word_color_cnt[1] < g:word_color_cnt[0]
-        let g:word_color_cnt[1] = g:word_color_cnt[0]
+    if s:word_color_cnt[1] < s:word_color_cnt[0]
+        let s:word_color_cnt[1] = s:word_color_cnt[0]
     endif
 
     " containedin=ALLで優先表示
@@ -52,9 +52,9 @@ function! s:set_word_color(...) abort
         for mw in magic_words
             let wd = substitute(wd, mw, '\\'.mw, 'g')
         endfor
-        execute "syntax match WordColor" . g:word_color_cnt[0] . " containedin=ALL /" . wd . "/"
+        execute "syntax match WordColor" . s:word_color_cnt[0] . " containedin=ALL /" . wd . "/"
     elseif a:1 == 'keyword'
-        execute "syntax keyword WordColor" . g:word_color_cnt[0] . " containedin=ALL " . wd
+        execute "syntax keyword WordColor" . s:word_color_cnt[0] . " containedin=ALL " . wd
     else
         echoerr 'invalid setting of syntax type : ' . a:1
     endif
@@ -64,9 +64,9 @@ function! s:set_word_color(...) abort
     else
         let tname = 'cterm'
     endif
-    execute "highlight WordColor" . g:word_color_cnt[0] .
-                \ " ".tname."fg=" . (g:word_color_highlight['fg'][g:word_color_cnt[0]]) .
-                \ " ".tname."bg=" . (g:word_color_highlight['bg'][g:word_color_cnt[0]])
+    execute "highlight WordColor" . s:word_color_cnt[0] .
+                \ " ".tname."fg=" . (g:word_color_highlight['fg'][s:word_color_cnt[0]]) .
+                \ " ".tname."bg=" . (g:word_color_highlight['bg'][s:word_color_cnt[0]])
 endfunction
 
 command! -nargs=? WordColorKeyWord call s:set_word_color('keyword', <f-args>)
