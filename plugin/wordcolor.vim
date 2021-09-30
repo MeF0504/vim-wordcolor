@@ -16,7 +16,6 @@ else
                 \ }
 endif
 let g:word_color_highlight = get(g:, 'word_color_highlight', s:word_color_hi_default)
-let g:word_color_default = get(g:, 'word_color_default', 'match')
 
 let s:word_color_ids = []
 function! s:set_word_color(...) abort
@@ -44,7 +43,9 @@ function! s:set_word_color(...) abort
     execute "highlight WordColor" . cnt .
                 \ " ".tname."fg=" . (g:word_color_highlight['fg'][cnt]) .
                 \ " ".tname."bg=" . (g:word_color_highlight['bg'][cnt])
-    let id = matchadd("WordColor".cnt, wd, 50)
+
+    let priority = get(g:, 'word_color_priority', 20)
+    let id = matchadd("WordColor".cnt, wd, priority)
     call add(s:word_color_ids, id)
 endfunction
 
