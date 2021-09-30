@@ -18,60 +18,37 @@ endif
 let g:word_color_highlight = get(g:, 'word_color_highlight', s:word_color_hi_default)
 let g:word_color_default = get(g:, 'word_color_default', 'match')
 
-let s:word_color_cnt = [-1,-1]
-
+let s:word_color_ids = []
 function! s:set_word_color(...) abort
-    if a:0 == 1
-        for i in range(0, s:word_color_cnt[1])
-            execute "syntax clear WordColor" . i
+    if a:0 == 0
+        for id in s:word_color_ids
+            call matchdelete(id)
         endfor
-        let s:word_color_cnt[0] = -1
+        let s:word_color_ids = []
         return
     endif
 
-    let wd = a:2
+    let wd = a:1
     let color_num = len(g:word_color_highlight['fg'])
     if len(g:word_color_highlight['bg']) != color_num
         echo 'invalid highlight setting. use default value'
         let g:word_color_highlight = s:word_color_hi_default
     endif
 
-    let s:word_color_cnt[0] += 1
-    if s:word_color_cnt[0] >= color_num
-        let s:word_color_cnt[0] = 0
-    endif
-    if s:word_color_cnt[1] < s:word_color_cnt[0]
-        let s:word_color_cnt[1] = s:word_color_cnt[0]
-    endif
-
-    " containedin=ALLで優先表示
-    if a:1 == 'match'
-        " matchはpriorityが低いらしい
-        " https://vim-jp.org/vimdoc-ja/syntax.html#:syn-priority
-        let magic_words = ['(', ')', '<', '>', '|', '+', '?']
-        for mw in magic_words
-            let wd = substitute(wd, mw, '\\'.mw, 'g')
-        endfor
-        execute "syntax match WordColor" . s:word_color_cnt[0] . " containedin=ALL /" . wd . "/"
-    elseif a:1 == 'keyword'
-        execute "syntax keyword WordColor" . s:word_color_cnt[0] . " containedin=ALL " . wd
-    else
-        echoerr 'invalid setting of syntax type : ' . a:1
-    endif
-
+    let cnt = len(s:word_color_ids)%color_num
     if has('gui_running')
         let tname = 'gui'
     else
         let tname = 'cterm'
     endif
-    execute "highlight WordColor" . s:word_color_cnt[0] .
-                \ " ".tname."fg=" . (g:word_color_highlight['fg'][s:word_color_cnt[0]]) .
-                \ " ".tname."bg=" . (g:word_color_highlight['bg'][s:word_color_cnt[0]])
+    execute "highlight WordColor" . cnt .
+                \ " ".tname."fg=" . (g:word_color_highlight['fg'][cnt]) .
+                \ " ".tname."bg=" . (g:word_color_highlight['bg'][cnt])
+    let id = matchadd("WordColor".cnt, wd, 50)
+    call add(s:word_color_ids, id)
 endfunction
 
-command! -nargs=? WordColorKeyWord call s:set_word_color('keyword', <f-args>)
-command! -nargs=? WordColorMatch call s:set_word_color('match', <f-args>)
-command! -nargs=? WordColor call s:set_word_color(g:word_color_default, <f-args>)
+command! -nargs=? WordColor call s:set_word_color(<f-args>)
 
 if exists('g:word_color_mapping')
     execute 'nnoremap '.g:word_color_mapping.' :WordColor<space>'
