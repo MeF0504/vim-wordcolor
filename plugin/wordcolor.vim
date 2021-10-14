@@ -17,13 +17,15 @@ else
 endif
 let g:word_color_highlight = get(g:, 'word_color_highlight', s:word_color_hi_default)
 
-let s:word_color_ids = []
 function! s:set_word_color(...) abort
+    if !exists('w:word_color_ids')
+        let w:word_color_ids = []
+    endif
     if a:0 == 0
-        for id in s:word_color_ids
+        for id in w:word_color_ids
             call matchdelete(id)
         endfor
-        let s:word_color_ids = []
+        let w:word_color_ids = []
         return
     endif
 
@@ -34,7 +36,7 @@ function! s:set_word_color(...) abort
         let g:word_color_highlight = s:word_color_hi_default
     endif
 
-    let cnt = len(s:word_color_ids)%color_num
+    let cnt = len(w:word_color_ids)%color_num
     if has('gui_running')
         let tname = 'gui'
     else
@@ -46,7 +48,7 @@ function! s:set_word_color(...) abort
 
     let priority = get(g:, 'word_color_priority', 20)
     let id = matchadd("WordColor".cnt, wd, priority)
-    call add(s:word_color_ids, id)
+    call add(w:word_color_ids, id)
 endfunction
 
 command! -nargs=? WordColor call s:set_word_color(<f-args>)
