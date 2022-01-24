@@ -2,6 +2,8 @@
 
 vim function to highlight any words.
 
+<img src=images/wordcolor.gif width="70%">
+
 ## Usage
 
 ```vim
