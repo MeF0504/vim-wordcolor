@@ -6,12 +6,12 @@ let g:loaded_wordcolor = 1
 
 let s:word_color_hi_default = [
             \ ['White', 'Maroon',  255, 1 ],
-            \ ['Black', 'Green',   233, 2 ],
-            \ ['Black', 'Olive',   233, 3 ],
-            \ ['Black', 'Navy',    233, 4 ],
-            \ ['Black', 'Purple',  233, 5 ],
-            \ ['Black', 'Teal',    233, 6 ],
-            \ ['White', 'Red',     255, 9 ],
+            \ ['White', 'Green',   255, 2 ],
+            \ ['White', 'Olive',   255, 3 ],
+            \ ['White', 'Navy',    255, 4 ],
+            \ ['White', 'Purple',  255, 5 ],
+            \ ['White', 'Teal',    255, 6 ],
+            \ ['Black', 'Red',     233, 9 ],
             \ ['Black', 'Lime',    233, 10],
             \ ['Black', 'Yellow',  233, 11],
             \ ['Black', 'Blue',    233, 12],
