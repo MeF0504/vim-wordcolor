@@ -8,11 +8,10 @@ vim function to highlight any words.
 
 ```vim
 :WordColor 'word'
-```
-
-To clear colors, you call the command with no argument.
-```vim
+" or, if there is no argument, highlight word under the cursor.
 :WordColor
+" clear colors
+:WordColorClear
 ```
 
 ## Variables

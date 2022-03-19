@@ -25,14 +25,11 @@ function! s:set_word_color(...) abort
         let w:word_color_ids = []
     endif
     if a:0 == 0
-        for id in w:word_color_ids
-            call matchdelete(id)
-        endfor
-        let w:word_color_ids = []
-        return
+        let wd = printf('\<%s\>', expand('<cword>'))
+    else
+        let wd = a:1
     endif
 
-    let wd = a:1
     let color_num = len(g:word_color_highlight)
 
     let cnt = len(w:word_color_ids)%color_num
@@ -49,7 +46,18 @@ function! s:set_word_color(...) abort
     call add(w:word_color_ids, id)
 endfunction
 
+function s:clear_word_color() abort
+    if !exists('w:word_color_ids')
+        return
+    endif
+    for id in w:word_color_ids
+        call matchdelete(id)
+    endfor
+    let w:word_color_ids = []
+endfunction
+
 command! -nargs=? WordColor call s:set_word_color(<f-args>)
+command! WordColorClear call s:clear_word_color()
 
 if exists('g:word_color_mapping')
     execute 'nnoremap '.g:word_color_mapping.' :WordColor<space>'
