@@ -4,6 +4,10 @@ vim function to highlight any words.
 
 <img src=images/wordcolor.gif width="70%">
 
+***Caution***  
+I think [vim-highlighter](https://github.com/azabiong/vim-highlighter) is better than this plugin.
+I recommend to use this.
+
 ## Usage
 
 ```vim
